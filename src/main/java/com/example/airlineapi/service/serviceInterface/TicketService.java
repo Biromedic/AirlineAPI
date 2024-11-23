@@ -7,9 +7,11 @@ import java.util.List;
 
 public interface TicketService {
 
-    Ticket createTicket(TicketDTO ticketDTO);
+    TicketDTO createTicket(TicketDTO ticketDTO);
 
-    List<Ticket> getTicketsByUserId(Long userId);
+    List<TicketDTO> getTicketsByUserId(Long userId);
 
-    List<Ticket> getTicketsByFlightId(Long flightId);
+    List<TicketDTO> getTicketsByFlightId(Long flightId);
+
+    TicketDTO checkInTicket(Long ticketId);
 }

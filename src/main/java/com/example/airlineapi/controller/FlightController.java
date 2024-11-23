@@ -1,21 +1,23 @@
 package com.example.airlineapi.controller;
 
-import com.example.airlineapi.model.Flight;
 import com.example.airlineapi.payload.FlightDTO;
+import com.example.airlineapi.payload.QueryFlightRequestDTO;
 import com.example.airlineapi.service.serviceInterface.FlightService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.time.LocalDate;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/flights")
 @RequiredArgsConstructor
@@ -27,37 +29,33 @@ public class FlightController {
     @Operation(summary = "Create a new flight", description = "This endpoint allows admins to create new flights")
     @PostMapping("/admin/create")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Flight> createFlight(@Valid @RequestBody FlightDTO flightDTO) {
-        Flight createdFlight = flightService.createFlight(flightDTO);
+    public ResponseEntity<FlightDTO> createFlight(@Valid @RequestBody FlightDTO flightDTO) {
+        FlightDTO createdFlight = flightService.createFlight(flightDTO);
         return ResponseEntity.ok(createdFlight);
     }
 
     @Operation(summary = "Query flights", description = "Admin endpoint to get available flights")
     @GetMapping("/admin/available")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<Flight>> getAvailableFlights() {
-        List<Flight> flights = flightService.getAvailableFlights();
+    public ResponseEntity<List<FlightDTO>> getAvailableFlights() {
+        List<FlightDTO> flights = flightService.getAvailableFlights();
         return ResponseEntity.ok(flights);
     }
 
-    @Operation(summary = "Query flights", description = "Public endpoint to query flights based on filters")
-    @GetMapping
-    public ResponseEntity<Page<Flight>> queryFlights(
-            @RequestParam String from,
-            @RequestParam String to,
-            @RequestParam String startDate,
-            @RequestParam String endDate,
+    @PostMapping("/query")
+    public ResponseEntity<Page<FlightDTO>> queryFlights(
+            @Valid @RequestBody QueryFlightRequestDTO queryFlightRequestDTO,
             Pageable pageable
     ) {
-        Page<Flight> flights = flightService.queryFlights(from, to, LocalDate.parse(startDate),
-                LocalDate.parse(endDate), pageable);
+        log.info("Querying flights with filters: {}", queryFlightRequestDTO);
+        Page<FlightDTO> flights = flightService.queryFlights(queryFlightRequestDTO, pageable);
         return ResponseEntity.ok(flights);
     }
 
     @GetMapping("admin/{flightId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Flight> getFlightById(@PathVariable Long flightId) {
-        Flight flight = flightService.getFlightById(flightId);
+    public ResponseEntity<FlightDTO> getFlightById(@PathVariable Long flightId) {
+        FlightDTO flight = flightService.getFlightById(flightId);
         return ResponseEntity.ok(flight);
     }
 }

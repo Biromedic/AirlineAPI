@@ -1,6 +1,5 @@
 package com.example.airlineapi.controller;
 
-import com.example.airlineapi.model.Ticket;
 import com.example.airlineapi.payload.TicketDTO;
 import com.example.airlineapi.service.serviceInterface.TicketService;
 import jakarta.validation.Valid;
@@ -19,22 +18,29 @@ public class TicketController {
     private final TicketService ticketService;
 
     @PostMapping("/create-ticket")
-    public ResponseEntity<Ticket> createTicket(@Valid @RequestBody TicketDTO ticketDTO) {
-        Ticket ticket = ticketService.createTicket(ticketDTO);
-        return ResponseEntity.ok(ticket);
+    public ResponseEntity<TicketDTO> createTicket(@Valid @RequestBody TicketDTO ticketDTO) {
+        TicketDTO createdTicket = ticketService.createTicket(ticketDTO);
+        return ResponseEntity.ok(createdTicket);
+    }
+
+    @PostMapping("/check-in/{ticketId}")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<TicketDTO> checkInTicket(@PathVariable Long ticketId) {
+        TicketDTO updatedTicket = ticketService.checkInTicket(ticketId);
+        return ResponseEntity.ok(updatedTicket);
     }
 
     @GetMapping("/user/{userId}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<List<Ticket>> getTicketsByUserId(@PathVariable Long userId) {
-        List<Ticket> tickets = ticketService.getTicketsByUserId(userId);
+    public ResponseEntity<List<TicketDTO>> getTicketsByUserId(@PathVariable Long userId) {
+        List<TicketDTO> tickets = ticketService.getTicketsByUserId(userId);
         return ResponseEntity.ok(tickets);
     }
 
-    @GetMapping("/flight/{flightId}")
+    @GetMapping("admin/flight/{flightId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<Ticket>> getTicketsByFlightId(@PathVariable Long flightId) {
-        List<Ticket> tickets = ticketService.getTicketsByFlightId(flightId);
+    public ResponseEntity<List<TicketDTO>> getTicketsByFlightId(@PathVariable Long flightId) {
+        List<TicketDTO> tickets = ticketService.getTicketsByFlightId(flightId);
         return ResponseEntity.ok(tickets);
     }
 }

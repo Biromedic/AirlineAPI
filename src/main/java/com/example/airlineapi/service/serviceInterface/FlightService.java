@@ -1,7 +1,7 @@
 package com.example.airlineapi.service.serviceInterface;
 
 import com.example.airlineapi.payload.FlightDTO;
-import com.example.airlineapi.model.Flight;
+import com.example.airlineapi.payload.QueryFlightRequestDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -9,11 +9,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface FlightService {
-    Flight createFlight(FlightDTO flightDTO);
+    FlightDTO createFlight(FlightDTO flightDTO);
 
-    List<Flight> getAvailableFlights();
+    List<FlightDTO> getAvailableFlights();
 
-    Flight getFlightById(Long flightId);
+    FlightDTO getFlightById(Long flightId);
 
-    Page<Flight> queryFlights(String from, String to, LocalDate startDate, LocalDate endDate, Pageable pageable);
+    Page<FlightDTO> queryFlights(QueryFlightRequestDTO queryFlightRequestDTO, Pageable pageable);
 }

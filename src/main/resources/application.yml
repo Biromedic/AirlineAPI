@@ -13,11 +13,13 @@ spring:
       password: ${DATASOURCE_PASSWORD}
       driver-class-name: org.postgresql.Driver
   jpa:
-      hibernate:
+    hibernate:
           ddl-auto: update
-      properties:
+    properties:
           hibernate:
-              dialect: org.hibernate.dialect.PostgreSQLDialect
+            dialect: org.hibernate.dialect.PostgreSQLDialect
+            format_sql: true
+    show-sql: true
 
 frontend:
     url: ${FRONTEND_URL}

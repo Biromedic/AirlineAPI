@@ -1,6 +1,7 @@
 package com.example.airlineapi.model;
 
 import com.example.airlineapi.model.enums.TicketStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -21,6 +22,7 @@ public class Ticket {
     @Column(name = "ticket_id")
     private Long ticketId;
 
+    @JsonIgnore
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
