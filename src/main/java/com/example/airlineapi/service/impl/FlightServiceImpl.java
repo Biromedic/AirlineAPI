@@ -53,7 +53,6 @@ public class FlightServiceImpl implements FlightService {
                 queryFlightRequestDTO.getToLocation(),
                 queryFlightRequestDTO.getStartDate(),
                 queryFlightRequestDTO.getEndDate(),
-                queryFlightRequestDTO.getDaysOfWeek(),
                 pageable
         );
 
