@@ -22,6 +22,6 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
             "f.toLocation = :to AND " +
             "f.startDate >= :startDate AND " +
             "f.endDate <= :endDate ")
-    Page<Flight> findByFilters(String from, String to, LocalDate startDate, LocalDate endDate, Set<FlightDays> daysOfWeek, Pageable pageable);
+    Page<Flight> findByFilters(String from, String to, LocalDate startDate, LocalDate endDate, Pageable pageable);
 
 }
