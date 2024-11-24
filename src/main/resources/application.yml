@@ -2,15 +2,15 @@ spring:
   application:
     name: AirlineAPI
   app:
-      jwtSecret: ${JWT_SECRET}
-      jwtExpirationMs: ${JWT_EXPIRATION_MS}
+      jwtSecret: 7069234323782b5a5c345c6a692d2b753a652569693f6f4a2c71305d75
+      jwtExpirationMs: 86400000
   ecom:
       app:
           jwtCookieName: jwtCookie
   datasource:
-      url: ${DATASOURCE_URL}
-      username: ${DATASOURCE_USERNAME}
-      password: ${DATASOURCE_PASSWORD}
+      url: jdbc:postgresql://localhost:5432/AirlineAPI
+      username: postgres
+      password: 123456789
       driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -22,4 +22,4 @@ spring:
     show-sql: true
 
 frontend:
-    url: ${FRONTEND_URL}
+    url: http://localhost:3000
