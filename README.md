@@ -31,6 +31,14 @@ AirlineAPI is a RESTful web application designed to facilitate the management of
 
 ---
 
+## 📊 ER Diagram
+
+The ER diagram for the database schema can be found [here](https://github.com/Biromedic/AirlineAPI/blob/main/AirlineAPIER.png).
+
+---
+
+---
+
 ### Access the API documentation:
 
 -	Swagger UI: https://airlineapi.onrender.com/swagger-ui/index.html
